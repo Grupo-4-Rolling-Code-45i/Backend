@@ -1,5 +1,6 @@
 // Importar Librerias
 const express = require("express");
+const { connectDB } = require("./database/config");
 require("dotenv").config();
 
 // Crear App
@@ -13,6 +14,9 @@ app.use(express.json());
 // Directorio publico
 
 app.use(express.static("public"));
+
+// Conectar a la base de datos
+connectDB();
 
 // Inicializar Servidor
 
