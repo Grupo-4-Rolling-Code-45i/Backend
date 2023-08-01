@@ -1,7 +1,8 @@
 const { validationResult } = require("express-validator");
 const { Usuario } = require("../model/usuario");
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
+// Lógica crear usuarios
 const crearUsuarios = async (req, res) => {
   const { email, password } = req.body;
 
@@ -25,16 +26,26 @@ const crearUsuarios = async (req, res) => {
 
     // Guardo el usuario en la base de datos
     await usuario.save();
+    // Generar JWT
+    const payload = {
+      id: usuario._id,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+    };
+    const token = jwt.sign(payload, process.env.SECRET_JWT, {
+      expiresIn: "1h",
+    });
+    res.status(201).json({
+      success: true,
+      msg: "Usuario creado correctamente",
+      token: token,
+    });
   } catch (error) {
     console.log(error);
     res.json({
       msg: "Hubo un error, por favor contactese con el administrador",
     });
   }
-  res.status(201).json({
-    success: true,
-    msg: "Usuario creado correctamente",
-  });
 };
 
 module.exports = { crearUsuarios };
