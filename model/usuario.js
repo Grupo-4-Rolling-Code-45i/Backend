@@ -23,8 +23,15 @@ const usuarioSchema = Schema({
 
 	rol: {
 		type: String,
+		enum:["usuario","administrador"],
 		default: 'usuario',
 	},
+
+	estado:{
+		type: String,
+		enum:["activo","inactivo"],
+		default: 'activo',
+	}
 
 });
 
