@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT;
-const cors = require('cors')
+const cors = require("cors");
 // Lectura y parseo del body
 app.use(express.json());
 
@@ -15,12 +15,14 @@ app.use(express.json());
 
 app.use(express.static("public"));
 // Usar CORS
-app.use(cors())
+app.use(cors());
 // Conectar a la base de datos
 connectDB();
 
 // Inicializar Servidor
 
+// Apis
+app.use("/api/auth", require("./routes/auth"));
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);
 });
