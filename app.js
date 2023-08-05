@@ -19,10 +19,11 @@ app.use(cors());
 // Conectar a la base de datos
 connectDB();
 
-// Inicializar Servidor
-
 // Apis
+app.use("/api/products/", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
+
+// Inicializar Servidor
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);
 });
