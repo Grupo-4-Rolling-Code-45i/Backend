@@ -23,6 +23,8 @@ connectDB();
 
 // Apis
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/users"));
+
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);
 });
