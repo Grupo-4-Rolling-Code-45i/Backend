@@ -1,9 +1,12 @@
 const express = require("express");
-const { crearProducto } = require("../controllers/admin.controllers");
+const {
+  crearProducto,
+  eliminarProducto,
+} = require("../controllers/product.controllers");
 const { check } = require("express-validator");
-const routerAdmin = express.Router();
+const routerProducts = express.Router();
 
-routerAdmin.post(
+routerProducts.post(
   "/new",
   [
     check("nombre", "Por favor, ingrese un nombre válido").not().isEmpty(),
@@ -19,4 +22,5 @@ routerAdmin.post(
   crearProducto
 );
 
-module.exports = routerAdmin;
+routerProducts.delete("/delete/:id", eliminarProducto);
+module.exports = routerProducts;
