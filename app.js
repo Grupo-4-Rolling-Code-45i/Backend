@@ -22,16 +22,15 @@ app.use(cors());
 // Conectar a la base de datos
 connectDB();
 
-// Apis
+// con esta ruta no me anda
 app.use("/api/products/", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
 
-// Inicializar Servidor
-//rutas
+
+//rutas  con la que si me anda
 app.use("/auth", require("./routes/auth"));
 
-// Apis
-// app.use("/api/auth", require("./routes/auth"));
+// Inicializar Servidor
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);
 });
