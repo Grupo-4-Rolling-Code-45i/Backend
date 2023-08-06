@@ -51,4 +51,5 @@ const crearUsuarios = async (req, res) => {
 
 
 
-module.exports = { crearUsuarios};
+
+module.exports = { crearUsuarios };
