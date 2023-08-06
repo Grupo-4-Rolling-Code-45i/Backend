@@ -2,6 +2,7 @@ const express = require("express");
 const {
   crearProducto,
   eliminarProducto,
+  cargarProductos,
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
 const routerProducts = express.Router();
@@ -23,4 +24,7 @@ routerProducts.post(
 );
 
 routerProducts.delete("/delete/:id", eliminarProducto);
+
+routerProducts.get("/",cargarProductos);
+
 module.exports = routerProducts;
