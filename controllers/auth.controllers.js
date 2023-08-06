@@ -60,7 +60,8 @@ const crearUsuarios = async (req, res) => {
 
 
 
-// Lógica login usuarios===============================================
+// ======================Lógica LOGIN usuarios===============================================
+
 
 const loginUsuario = async (req, res) => {
   const { email, password } = req.body;
@@ -77,14 +78,24 @@ try {
   let usuario = await Usuario.findOne({ email });
   
 
+
   if (!usuario) {
     return res.json({
       msg: "El mail ingresado no esta registrado",
     });
   } 
 
+  // Comparo la contraseña ingresada con la que esta en la base de datos
+  const validarContraseña = bcrypt.compareSync(password, usuario.password);
+  if (!validarContraseña) {
+    return res.json({
+      msg: "La contraseña ingresada es incorrecta",
+    });
+  }
+
   res.json({
-    saludo: "Mail encontrado",
+    msg: "Usuario logueado correctamente",
+    usuario,
   });
 
 
