@@ -22,13 +22,12 @@ app.use(cors());
 // Conectar a la base de datos
 connectDB();
 
-// con esta ruta no me anda
+// rutas
 app.use("/api/products/", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
 
 
-//rutas  con la que si me anda
-app.use("/auth", require("./routes/auth"));
+
 
 // Inicializar Servidor
 app.listen(PORT, () => {
