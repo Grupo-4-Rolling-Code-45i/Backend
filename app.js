@@ -22,8 +22,11 @@ app.use(cors());
 // Conectar a la base de datos
 connectDB();
 
-// Inicializar Servidor
+// Apis
+app.use("/api/products/", require("./routes/products"));
+app.use("/api/auth", require("./routes/auth"));
 
+// Inicializar Servidor
 //rutas
 app.use("/auth", require("./routes/auth"));
 
