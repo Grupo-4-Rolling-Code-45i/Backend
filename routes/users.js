@@ -4,7 +4,7 @@ const routerUsers = express.Router();
 
 routerUsers.put("/edit",editarUsuario);
 
-routerUsers.get("/users",cargarUsuarios);
+routerUsers.get("/",cargarUsuarios);
 
 
 module.exports = routerUsers;
