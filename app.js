@@ -14,8 +14,7 @@ app.use(express.json());
 // Directorio publico
 app.use(express.static("public"));
 
-//rutas
-app.use("/auth", require("./routes/auth"));
+
 
 // Usar CORS
 app.use(cors());
@@ -25,8 +24,11 @@ connectDB();
 
 // Inicializar Servidor
 
+//rutas
+app.use("/auth", require("./routes/auth"));
+
 // Apis
-app.use("/api/auth", require("./routes/auth"));
+// app.use("/api/auth", require("./routes/auth"));
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);
 });

@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 // Lógica crear usuarios
 const crearUsuarios = async (req, res) => {
   const { email, password } = req.body;
-
+ 
   // Validacion de Express Validator
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -15,6 +15,7 @@ const crearUsuarios = async (req, res) => {
   try {
     // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
+    console.log(usuario);
     if (usuario) {
       return res.status(409).json({
         msg: "Ya existe un usuario registrado con ese correo electronico",
@@ -28,15 +29,16 @@ const crearUsuarios = async (req, res) => {
     // Guardo el usuario en la base de datos
     await usuario.save();
     // Generar JWT
-    const payload = {
-      id: usuario._id,
-      nombre: usuario.nombre,
-      rol: usuario.rol,
-    };
-    const token = jwt.sign(payload, process.env.SECRET_JWT, {
-      expiresIn: "1h",
-    });
-    res.status(201).json({
+    // const payload = {
+    //   id: usuario._id,
+    //   nombre: usuario.nombre,
+    //   rol: usuario.rol,
+    // };
+    // const token = jwt.sign(payload, process.env.SECRET_JWT, {
+    //   expiresIn: "1h",
+    // });
+    // res.status(201).json({
+      res.json({
       success: true,
       msg: "Usuario creado correctamente",
       token: token,
@@ -50,11 +52,49 @@ const crearUsuarios = async (req, res) => {
 };
 
 
-const loginUsuario =  (req, res) => {
-  res.json({
-    saludo:"hola desde el login",
-  });
-};
 
+
+
+
+
+
+
+
+// Lógica login usuarios===============================================
+
+const loginUsuario = async (req, res) => {
+  const { email, password } = req.body;
+  // Validacion de Express Validator
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.json({ success: false, errors: errors.mapped() });
+  }
+
+ 
+
+try {
+  // Pregunto si ya existe un usuario creado con ese email
+  let usuario = await Usuario.findOne({ email });
+  
+
+  if (!usuario) {
+    return res.json({
+      msg: "El mail ingresado no esta registrado",
+    });
+  } 
+
+  res.json({
+    saludo: "Mail encontrado",
+  });
+
+
+} catch (error) {
+  console.log(error);
+    res.json({
+      msg: "Hubo un error, por favor contactese con el administrador",
+    });
+}
+
+};
 
 module.exports = { crearUsuarios, loginUsuario };
