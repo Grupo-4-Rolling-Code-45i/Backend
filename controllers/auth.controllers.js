@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const { Usuario } = require("../model/usuario");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 // Lógica crear usuarios
 const crearUsuarios = async (req, res) => {
   const { email, password } = req.body;
@@ -48,4 +49,12 @@ const crearUsuarios = async (req, res) => {
   }
 };
 
-module.exports = { crearUsuarios };
+
+const loginUsuario =  (req, res) => {
+  res.json({
+    saludo:"hola desde el login",
+  });
+};
+
+
+module.exports = { crearUsuarios, loginUsuario };
