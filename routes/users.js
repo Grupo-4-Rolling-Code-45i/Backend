@@ -1,9 +1,10 @@
 const express = require("express");
-const { crearUsuarios,editarUsuario } = require("../controllers/auth.controllers");
-const { check } = require("express-validator");
-const routerAuth = express.Router();
+const {editarUsuario ,cargarUsuarios} = require("../controllers/users.controllers");
+const routerUsers = express.Router();
 
-routerAuth.put("/edit",editarUsuario);
+routerUsers.put("/edit",editarUsuario);
+
+routerUsers.get("/users",cargarUsuarios);
 
 
-module.exports = routerAuth;
+module.exports = routerUsers;

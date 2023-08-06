@@ -25,7 +25,27 @@ const editarUsuario = async(req,res) => {
         res.status(500).json({msg:"error. contactese con el administrador"});
             }
   };
+
+const cargarUsuarios= async (req,res) =>
+{
+
+try {
+const usuarios= await Usuario.find();
+
+res.status(200).json({ok:true,
+    usuarios,
+});
+
+
+}
+
+catch(error){
+  res.status(500).json({msg:"error. contactese con el administrador"});
+      }
+
+
+};
   
   
   
-  module.exports = {editarUsuario };
+  module.exports = {editarUsuario,cargarUsuarios };
