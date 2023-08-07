@@ -49,6 +49,17 @@ const eliminarProducto = async (req, res) => {
   }
 };
 
+//Cargar producto
+const cargarProductos = async (req, res) => {
+  try {
+    const productos = await Producto.find();
+
+    res.status(200).json({ ok: true, productos });
+  } catch (error) {
+    res.status(500).json({ msg: "error. contactese con el administrador" });
+  }
+};
+
 // Mostrar productos inicio
 
 const mostrarProductos = async (req, res) => {
@@ -71,4 +82,9 @@ const mostrarProductos = async (req, res) => {
     );
   }
 };
-module.exports = { crearProducto, eliminarProducto, mostrarProductos };
+module.exports = {
+  crearProducto,
+  eliminarProducto,
+  mostrarProductos,
+  cargarProductos,
+};
