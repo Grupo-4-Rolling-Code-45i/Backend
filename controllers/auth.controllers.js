@@ -99,7 +99,7 @@ const loginUsuario = async (req, res) => {
     };
     console.log(payload);
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
-      expiresIn: "6000ms",
+      expiresIn: "20000ms",
     });
 
     res.status(200).json({
