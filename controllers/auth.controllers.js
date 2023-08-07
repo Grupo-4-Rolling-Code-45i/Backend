@@ -15,7 +15,7 @@ const crearUsuarios = async (req, res) => {
   try {
     // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
-    console.log(usuario);
+    //console.log(usuario);
     if (usuario) {
       return res.status(409).json({
         msg: "Ya existe un usuario registrado con ese correo electronico",
@@ -29,19 +29,23 @@ const crearUsuarios = async (req, res) => {
     // Guardo el usuario en la base de datos
     await usuario.save();
     // Generar JWT
-    // const payload = {
-    //   id: usuario._id,
-    //   nombre: usuario.nombre,
-    //   rol: usuario.rol,
-    // };
-    // const token = jwt.sign(payload, process.env.SECRET_JWT, {
-    //   expiresIn: "1h",
-    // });
+    const payload = {
+      id: usuario._id,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+    };
+
+    console.log(payload);
+
+    
+    const token = jwt.sign(payload, process.env.SECRET_JWT, {
+      expiresIn: "1h",
+    });
 
     res.status(201).json({
       success: true,
       msg: "Usuario creado correctamente",
-      // token: token,
+      token: token,
     });
   } catch (error) {
     console.log(error);
@@ -66,7 +70,7 @@ const loginUsuario = async (req, res) => {
     let usuario = await Usuario.findOne({ email });
 
     if (!usuario) {
-      return res.json({
+      return res.status(400).json({
         msg: "email o contraseña incorrectos",
       });
     }
@@ -74,18 +78,40 @@ const loginUsuario = async (req, res) => {
     // Comparo la contraseña ingresada con la que esta en la base de datos
     const validarContraseña = bcrypt.compareSync(password, usuario.password);
     if (!validarContraseña) {
-      return res.json({
+      return res.status(400).json({
         msg: "email o contraseña incorrectos",
       });
     }
 
-    res.json({
-      msg: "Usuario logueado correctamente",
-      usuario,
+    if (usuario.estado === "inactivo") {
+      return res.status(401).json({
+        msg: "Usuario deshabilitado",
+      });
+    }
+
+   
+
+    //generar JWT
+    const payload = {
+      id: usuario._id,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+    };
+    console.log(payload);
+    const token = jwt.sign(payload, process.env.SECRET_JWT, {
+      expiresIn: "6000ms",
     });
+
+    res.status(200).json({
+      success: true,
+      msg: "Usuario logueado correctamente",
+     token, usuario
+    });
+
+   
   } catch (error) {
     console.log(error);
-    res.json({
+    res.status(500).json({
       msg: "Hubo un error, por favor contactese con el administrador",
     });
   }
