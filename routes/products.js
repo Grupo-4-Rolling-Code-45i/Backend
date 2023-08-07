@@ -4,6 +4,7 @@ const {
   eliminarProducto,
   cargarProductos,
   mostrarProductos,
+  buscarProductos,
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
 const routerProducts = express.Router();
@@ -27,5 +28,5 @@ routerProducts.get("/", mostrarProductos);
 routerProducts.delete("/delete/:id", eliminarProducto);
 
 routerProducts.get("/", cargarProductos);
-
+routerProducts.get("/buscar/:term", buscarProductos);
 module.exports = routerProducts;
