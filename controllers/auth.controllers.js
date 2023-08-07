@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const { Usuario } = require("../model/usuario");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 // Lógica crear usuarios
 const crearUsuarios = async (req, res) => {
   const { email, password } = req.body;
@@ -14,6 +15,7 @@ const crearUsuarios = async (req, res) => {
   try {
     // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
+    //console.log(usuario);
     if (usuario) {
       return res.status(409).json({
         msg: "Ya existe un usuario registrado con ese correo electronico",
@@ -32,9 +34,13 @@ const crearUsuarios = async (req, res) => {
       nombre: usuario.nombre,
       rol: usuario.rol,
     };
+
+    console.log(payload);
+
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
       expiresIn: "1h",
     });
+
     res.status(201).json({
       success: true,
       msg: "Usuario creado correctamente",
@@ -48,4 +54,63 @@ const crearUsuarios = async (req, res) => {
   }
 };
 
-module.exports = { crearUsuarios };
+// ======================Lógica LOGIN usuarios===============================================
+
+const loginUsuario = async (req, res) => {
+  const { email, password } = req.body;
+  // Validacion de Express Validator
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.json({ success: false, errors: errors.mapped() });
+  }
+
+  try {
+    // Pregunto si ya existe un usuario creado con ese email
+    let usuario = await Usuario.findOne({ email });
+
+    if (!usuario) {
+      return res.status(400).json({
+        msg: "email o contraseña incorrectos",
+      });
+    }
+
+    // Comparo la contraseña ingresada con la que esta en la base de datos
+    const validarContraseña = bcrypt.compareSync(password, usuario.password);
+    if (!validarContraseña) {
+      return res.status(400).json({
+        msg: "email o contraseña incorrectos",
+      });
+    }
+
+    if (usuario.estado === "inactivo") {
+      return res.status(401).json({
+        msg: "Usuario deshabilitado",
+      });
+    }
+
+    //generar JWT
+    const payload = {
+      id: usuario._id,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+    };
+    console.log(payload);
+    const token = jwt.sign(payload, process.env.SECRET_JWT, {
+      expiresIn: "20000ms",
+    });
+
+    res.status(200).json({
+      success: true,
+      msg: "Usuario logueado correctamente",
+      token,
+      usuario,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Hubo un error, por favor contactese con el administrador",
+    });
+  }
+};
+
+module.exports = { crearUsuarios, loginUsuario };
