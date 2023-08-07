@@ -37,7 +37,6 @@ const crearUsuarios = async (req, res) => {
 
     console.log(payload);
 
-    
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
       expiresIn: "1h",
     });
@@ -89,8 +88,6 @@ const loginUsuario = async (req, res) => {
       });
     }
 
-   
-
     //generar JWT
     const payload = {
       id: usuario._id,
@@ -105,10 +102,9 @@ const loginUsuario = async (req, res) => {
     res.status(200).json({
       success: true,
       msg: "Usuario logueado correctamente",
-     token, usuario
+      token,
+      usuario,
     });
-
-   
   } catch (error) {
     console.log(error);
     res.status(500).json({
