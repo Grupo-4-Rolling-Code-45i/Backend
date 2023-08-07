@@ -6,7 +6,7 @@ require("dotenv").config();
                                 
 const connectDB = async () => {  
   try {                          
-     await mongoose.connect('mongodb+srv://WebPracticeMERN:DKf2SUjeLaPCEhul@webpractice.mrzzjvz.mongodb.net/');
+     await mongoose.connect(process.env.DB_CNN);
     console.log("Conectado a la base de datos");
   } catch (error) {
     console.log(
