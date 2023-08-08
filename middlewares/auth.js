@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
     const token = req.header("Authorization");
     const { id } = jwt.verify(token, process.env.SECRET_JWT);
     req.id = id;
-    
+
     const user = await Usuario.findById(id);
     req.user = user;
     next();
