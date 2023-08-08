@@ -37,13 +37,11 @@ const eliminarProducto = async (req, res) => {
         msg: "No se encontró el producto que desea eliminar",
       });
     }
-    return res
-      .status(200)
-      .json({
-        success: true,
-        msg: "Producto eliminado",
-        response: borrarProducto._id,
-      });
+    return res.status(200).json({
+      success: true,
+      msg: "Producto eliminado",
+      response: borrarProducto._id,
+    });
   } catch (error) {
     console.log(
       "Ha ocurrido un error, por favor contactese con el administrador"
@@ -52,25 +50,41 @@ const eliminarProducto = async (req, res) => {
 };
 
 //Cargar producto
-const cargarProductos= async (req,res) =>
-{
+const cargarProductos = async (req, res) => {
+  try {
+    const productos = await Producto.find();
 
-try {
-const productos= await Producto.find();
-
-res.status(200).json({ok:true,
-    productos,
-});
-
-
-}
-
-
-catch(error){
-  res.status(500).json({msg:"error. contactese con el administrador"});
-      }
-
-
+    res.status(200).json({ ok: true, productos });
+  } catch (error) {
+    res.status(500).json({ msg: "error. contactese con el administrador" });
+  }
 };
 
-module.exports = { crearProducto, eliminarProducto,cargarProductos };
+// Mostrar productos inicio
+
+const mostrarProductos = async (req, res) => {
+  try {
+    const productos = await Producto.find();
+    if (!productos) {
+      return res.status(200).json({
+        success: true,
+        msg: "No se encontraron productos",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      msg: "Productos encontrados",
+      response: productos,
+    });
+  } catch (error) {
+    console.log(
+      "Ha ocurrido un error, por favor contactese con el administrador"
+    );
+  }
+};
+module.exports = {
+  crearProducto,
+  eliminarProducto,
+  mostrarProductos,
+  cargarProductos,
+};
