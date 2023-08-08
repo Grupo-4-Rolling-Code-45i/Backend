@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const { Producto } = require("../model/producto-model");
 
+
 // Agregar productos
 const crearProducto = async (req, res) => {
   // Aqui saco la info de todos los datos que necesito
@@ -13,6 +14,7 @@ const crearProducto = async (req, res) => {
     });
   }
   try {
+    console.log(producto);
     // Creo constante con los datos de producto
     const newProduct = await Producto.create(producto);
     // Doy respuesta con la informacion necesaria
@@ -25,6 +27,7 @@ const crearProducto = async (req, res) => {
     console.log(error);
   }
 };
+
 // Eliminar productos
 const eliminarProducto = async (req, res) => {
   try {
@@ -106,6 +109,7 @@ const mostrarUnProducto = async (req, res) => {
     );
   }
 };
+
 // Buscar productos por nombre
 const buscarProductos = async (req, res) => {
   try {
@@ -143,6 +147,61 @@ const buscarProductos = async (req, res) => {
   }
 };
 
+// //editar producto
+// const editarProducto = async (req, res) => {
+// try { 
+
+      
+
+  
+// } catch (error) {
+//   console.log(
+//     "Ha ocurrido un error, por favor contacte con el administrador"
+//   );
+//   res.status(500).json({
+//     msg: "Error interno del servidor. Por favor, contacte al administrador",
+//   });
+// }
+
+
+// };
+
+const editarProducto = async (req, res) => {
+  try {
+    const productoID = req.params._id;
+    const producto = await Producto.findById(productoID);
+    if (!producto) {
+      return res.status(404).json({
+        success: false,
+        msg: "No se encontraron productos",
+      });
+    }
+    const productoActualizado = await Producto.findByIdAndUpdate(
+      productoID,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json({
+      success: true,
+      msg: "Producto actualizado",
+      response: productoActualizado,
+    });
+  } catch (error) {
+    console.log(
+      "Ha ocurrido un error, por favor contactese con el administrador"
+    );
+
+    res.status(500).json({
+      msg: "Error interno del servidor. Por favor, contacte al administrador",
+    });
+  }
+};
+
+
+
+
 module.exports = {
   crearProducto,
   eliminarProducto,
@@ -150,4 +209,5 @@ module.exports = {
   cargarProductos,
   mostrarUnProducto,
   buscarProductos,
+  editarProducto
 };

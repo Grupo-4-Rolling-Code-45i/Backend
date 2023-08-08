@@ -38,7 +38,7 @@ const crearUsuarios = async (req, res) => {
     console.log(payload);
 
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
-      expiresIn: "1h",
+      expiresIn: "2h",
     });
 
     res.status(201).json({
@@ -96,7 +96,7 @@ const loginUsuario = async (req, res) => {
     };
     console.log(payload);
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
-      expiresIn: "20000ms",
+      expiresIn: "2h",
     });
 
     res.status(200).json({
