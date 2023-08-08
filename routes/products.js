@@ -5,6 +5,7 @@ const {
   cargarProductos,
   mostrarProductos,
   editarProducto,
+  mostrarUnProducto,
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
 const { validarJWT } = require("../middlewares/validar-jwt");
@@ -28,8 +29,10 @@ routerProducts.post(
 );
 routerProducts.get("/", mostrarProductos);
 routerProducts.delete("/delete/:id", eliminarProducto);
-
+// Mostrar todos los productos
 routerProducts.get("/", cargarProductos);
 
 routerProducts.put("/edit", editarProducto);
+// Mostrar un producto por su id
+routerProducts.get("/get-one/:id", mostrarUnProducto);
 module.exports = routerProducts;
