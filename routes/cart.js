@@ -2,16 +2,16 @@ const express = require('express');
 const routerCart = express.Router();
 const carritoControllers = require('../controllers/carrito.controllers');
 
-// Obtener contenido cart
+// Obtener contenido del carrito
 routerCart.get('/', carritoControllers.obtenerCarrito);
 
-// Agregar prod
+// Agregar producto
 routerCart.post('/new', carritoControllers.agregarProducto);
 
 // Actualizar cantidad
 routerCart.put('/edit/:itemId', carritoControllers.actualizarCantidad);
 
-// Eliminar prod
+// Eliminar producto completo
 routerCart.delete('/delete/:itemId', carritoControllers.eliminarProducto);
 
 module.exports = routerCart;

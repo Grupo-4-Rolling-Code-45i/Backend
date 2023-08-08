@@ -31,7 +31,7 @@ const agregarProducto = async (req, res) => {
   }
 };
 
-// Controlador para actualizar cantidad
+// Controlador para actualizar cantidad de ese producto
 const actualizarCantidad = async (req, res) => {
   try {
     const usuarioId = req.body.usuario;
@@ -49,7 +49,7 @@ const actualizarCantidad = async (req, res) => {
   }
 };
 
-// Controlador para quitar del carrito
+// Controlador para quitar producto del carrito
 const eliminarProducto = async (req, res) => {
   try {
     const usuarioId = req.body.usuario;
@@ -57,7 +57,7 @@ const eliminarProducto = async (req, res) => {
     const quitarProducto = await ProductoSeleccionado.findOneAndDelete({ _id: itemId, usuario: usuarioId });
     if (!quitarProducto) {
         return res.status(200).json({
-            success: true,
+            ok: true,
             msg: 'No se encontró el producto que desea quitar',
         });
     }
