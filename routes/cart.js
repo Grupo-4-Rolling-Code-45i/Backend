@@ -6,12 +6,12 @@ const carritoControllers = require('../controllers/carrito.controllers');
 routerCart.get('/', carritoControllers.obtenerCarrito);
 
 // Agregar prod
-routerCart.post('/add', carritoControllers.agregarProducto);
+routerCart.post('/new', carritoControllers.agregarProducto);
 
 // Actualizar cantidad
-routerCart.put('/update/:itemId', carritoControllers.actualizarCantidad);
+routerCart.put('/edit/:itemId', carritoControllers.actualizarCantidad);
 
 // Eliminar prod
-routerCart.delete('/remove/:itemId', carritoControllers.eliminarProducto);
+routerCart.delete('/delete/:itemId', carritoControllers.eliminarProducto);
 
 module.exports = routerCart;
