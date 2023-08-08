@@ -1,5 +1,6 @@
 const { Pedido } = require("../model/pedido");
 const { validationResult } = require("express-validator");
+const { Usuario } = require("../model/usuario");
 
 // Agregar pedido
 const crearPedido = async (req, res) => {
@@ -46,4 +47,24 @@ const cargarPedidos = async (req, res) => {
 
 };
 
-module.exports ={cargarPedidos,crearPedido}
+const editarPedido = async(req,res) => {
+
+  try{
+     
+
+  await Pedido.findByIdAndUpdate(req.body._id,{estado:req.body.estado});
+
+  res.status(200).json({ok: true, mge:"pedido-estado editado"});
+
+
+
+ }
+
+  catch(error){
+      res.status(500).json({msg:"error. contactese con el administrador"});
+          }
+};
+
+
+
+module.exports ={cargarPedidos,crearPedido,editarPedido}
