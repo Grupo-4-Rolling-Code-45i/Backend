@@ -4,7 +4,7 @@ const { usuario } = require('../model/usuario');
 // Controlador para obtener contenido del carrito de compras de un user
 const obtenerCarrito = async (req, res) => {
   try {
-    const usuarioId = req.body.usuario;
+    const usuarioId = req.params.usuario;
     const carrito = await ProductoSeleccionado.find({ usuario: usuarioId });
     res.status(200).json({ok:true, carrito});
   } catch (error) {

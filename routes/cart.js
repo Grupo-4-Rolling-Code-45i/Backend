@@ -3,7 +3,7 @@ const routerCart = express.Router();
 const carritoControllers = require('../controllers/carrito.controllers');
 
 // Obtener contenido del carrito
-routerCart.get('/', carritoControllers.obtenerCarrito);
+routerCart.get('/:usuario', carritoControllers.obtenerCarrito);
 
 // Agregar producto
 routerCart.post('/new', carritoControllers.agregarProducto);
