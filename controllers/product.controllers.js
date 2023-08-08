@@ -15,6 +15,7 @@ const crearProducto = async (req, res) => {
   try {
     // Creo constante con los datos de producto
     const newProduct = await Producto.create(producto);
+    
     // Doy respuesta con la informacion necesaria
     return res.status(201).json({
       success: true,
