@@ -82,9 +82,72 @@ const mostrarProductos = async (req, res) => {
     );
   }
 };
+
+// Mostrar un producto
+
+const mostrarUnProducto = async (req, res) => {
+  try {
+    const productoID = req.params.id;
+    const producto = await Producto.findById(productoID);
+    if (!producto) {
+      return res.status(404).json({
+        success: false,
+        msg: "No se encontraron productos",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      msg: "Producto encontrado",
+      response: producto,
+    });
+  } catch (error) {
+    console.log(
+      "Ha ocurrido un error, por favor contactese con el administrador"
+    );
+  }
+};
+// Buscar productos por nombre
+const buscarProductos = async (req, res) => {
+  try {
+    const { term } = req.params;
+    if (!term) {
+      return res.status(400).json({
+        success: false,
+        msg: "Debe proporcionar un término en su búsqueda.",
+      });
+    }
+
+    const productos = await Producto.find({
+      nombre: { $regex: new RegExp(term, "i") },
+    });
+
+    if (productos.length === 0) {
+      return res.status(200).json({
+        success: true,
+        msg: "No se encontraron productos con el término de búsqueda proporcionado.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Productos encontrados",
+      response: productos,
+    });
+  } catch (error) {
+    console.log(
+      "Ha ocurrido un error, por favor contacte con el administrador"
+    );
+    res.status(500).json({
+      msg: "Error interno del servidor. Por favor, contacte al administrador",
+    });
+  }
+};
+
 module.exports = {
   crearProducto,
   eliminarProducto,
   mostrarProductos,
   cargarProductos,
+  mostrarUnProducto,
+  buscarProductos,
 };
