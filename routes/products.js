@@ -7,7 +7,6 @@ const {
   mostrarUnProducto,
   buscarProductos,
   editarProducto,
-  mostrarUnProducto,
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
 const { validarJWT } = require("../middlewares/validar-jwt");
