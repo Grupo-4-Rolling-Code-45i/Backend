@@ -7,11 +7,13 @@ const {
   mostrarUnProducto,
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
+const { validarJWT } = require("../middlewares/validar-jwt");
 const routerProducts = express.Router();
 
 routerProducts.post(
   "/new",
-  [
+   validarJWT,
+  [ 
     check("nombre", "Por favor, ingrese un nombre válido").not().isEmpty(),
     check("precio", "Por favor, ingrese un precio válido").not().isEmpty(),
     check(
