@@ -1,7 +1,6 @@
 const { validationResult } = require("express-validator");
 const { Producto } = require("../model/producto-model");
 
-
 // Agregar productos
 const crearProducto = async (req, res) => {
   // Aqui saco la info de todos los datos que necesito
@@ -147,28 +146,13 @@ const buscarProductos = async (req, res) => {
   }
 };
 
+
+
 // //editar producto
-// const editarProducto = async (req, res) => {
-// try { 
-
-      
-
-  
-// } catch (error) {
-//   console.log(
-//     "Ha ocurrido un error, por favor contacte con el administrador"
-//   );
-//   res.status(500).json({
-//     msg: "Error interno del servidor. Por favor, contacte al administrador",
-//   });
-// }
-
-
-// };
 
 const editarProducto = async (req, res) => {
   try {
-    const productoID = req.params._id;
+    const productoID = req.params.id; 
     const producto = await Producto.findById(productoID);
     if (!producto) {
       return res.status(404).json({
@@ -199,9 +183,6 @@ const editarProducto = async (req, res) => {
   }
 };
 
-
-
-
 module.exports = {
   crearProducto,
   eliminarProducto,
@@ -209,5 +190,5 @@ module.exports = {
   cargarProductos,
   mostrarUnProducto,
   buscarProductos,
-  editarProducto
+  editarProducto,
 };
