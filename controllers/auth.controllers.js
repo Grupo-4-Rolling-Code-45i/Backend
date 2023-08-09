@@ -15,7 +15,7 @@ const crearUsuarios = async (req, res) => {
   try {
     // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
-    //console.log(usuario);
+
     if (usuario) {
       return res.status(409).json({
         msg: "Ya existe un usuario registrado con ese correo electronico",
@@ -34,9 +34,6 @@ const crearUsuarios = async (req, res) => {
       nombre: usuario.nombre,
       rol: usuario.rol,
     };
-
-    console.log(payload);
-
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
       expiresIn: "1h",
     });
@@ -94,7 +91,7 @@ const loginUsuario = async (req, res) => {
       nombre: usuario.nombre,
       rol: usuario.rol,
     };
-    console.log(payload);
+
     const token = jwt.sign(payload, process.env.SECRET_JWT, {
       expiresIn: "1h",
     });

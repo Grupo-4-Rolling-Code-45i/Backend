@@ -146,7 +146,7 @@ const buscarProductos = async (req, res) => {
 const editarProducto = async (req, res) => {
   try {
     const productoEdit = await Producto.findById(req.body._id);
-    console.log(productoEdit);
+
     if (!productoEdit) {
       res.status(404),
         json({
