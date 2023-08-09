@@ -143,6 +143,26 @@ const buscarProductos = async (req, res) => {
   }
 };
 
+const editarProducto = async (req, res) => {
+  try {
+    const productoEdit = await Producto.findById(req.body._id);
+    console.log(productoEdit);
+    if (!productoEdit) {
+      res.status(404),
+        json({
+          ok: false,
+          mge: "no existe producto con ese ID",
+        });
+    }
+
+    await Producto.findByIdAndUpdate(req.body._id, req.body);
+
+    res.status(200).json({ ok: true, mge: "producto editado" });
+  } catch (error) {
+    res.status(500).json({ msg: "error. contactese con el administrador" });
+  }
+};
+
 module.exports = {
   crearProducto,
   eliminarProducto,
@@ -150,4 +170,6 @@ module.exports = {
   cargarProductos,
   mostrarUnProducto,
   buscarProductos,
+  editarProducto,
+  mostrarUnProducto,
 };
