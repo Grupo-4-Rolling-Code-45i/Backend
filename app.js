@@ -33,7 +33,7 @@ app.use("/api/products/", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/orders", require("./routes/orders"));
-
+app.use("/api/cart", require("./routes/cart"));
 // Inicializar Servidor
 app.listen(PORT, () => {
   console.log(`Servidor Corriendo en el puerto: ${PORT}`);

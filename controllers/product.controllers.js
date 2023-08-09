@@ -15,6 +15,7 @@ const crearProducto = async (req, res) => {
   try {
     // Creo constante con los datos de producto
     const newProduct = await Producto.create(producto);
+    
     // Doy respuesta con la informacion necesaria
     return res.status(201).json({
       success: true,
@@ -146,7 +147,7 @@ const buscarProductos = async (req, res) => {
 const editarProducto = async (req, res) => {
   try {
     const productoEdit = await Producto.findById(req.body._id);
-    console.log(productoEdit);
+
     if (!productoEdit) {
       res.status(404),
         json({
