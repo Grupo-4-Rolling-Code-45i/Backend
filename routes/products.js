@@ -10,11 +10,12 @@ const {
 } = require("../controllers/product.controllers");
 const { check } = require("express-validator");
 const { validarJWT } = require("../middlewares/validar-jwt");
+const auth = require("../middlewares/auth");
 const routerProducts = express.Router();
 
 routerProducts.post(
   "/new",
-  validarJWT,
+  auth,
   [
     check("nombre", "Por favor, ingrese un nombre válido").not().isEmpty(),
     check("precio", "Por favor, ingrese un precio válido").not().isEmpty(),
@@ -29,13 +30,13 @@ routerProducts.post(
   crearProducto
 );
 routerProducts.get("/", mostrarProductos);
-routerProducts.delete("/delete/:id", eliminarProducto);
+routerProducts.delete("/delete/:id",auth, eliminarProducto);
 // Mostrar todos los productos
 routerProducts.get("/", cargarProductos);
 // Mostrar un producto por su id
 routerProducts.get("/get-one/:id", mostrarUnProducto);
 routerProducts.get("/buscar/:term", buscarProductos);
-routerProducts.put("/edit", editarProducto);
+routerProducts.put("/edit",auth, editarProducto);
 // Mostrar un producto por su id
 routerProducts.get("/get-one/:id", mostrarUnProducto);
 module.exports = routerProducts;

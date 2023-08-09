@@ -3,7 +3,7 @@ const {editarUsuario ,cargarUsuarios, getAuthStatus} = require("../controllers/u
 const auth = require("../middlewares/auth");
 const routerUsers = express.Router();
 
-routerUsers.put("/edit",editarUsuario);
+routerUsers.put("/edit",auth,editarUsuario);
 
 routerUsers.get("/",cargarUsuarios);
 
