@@ -7,7 +7,7 @@ Aplicación web creada con el stack **"MERN"**
 ## Variables de entorno
 
     PORT = 4500
-    DB_CNN = mongodb+srv://grupo4-45i:fjGsRaU5RcGNpIAT@grupo4-45i.bs2gqra.mongodb.net/reacttomypizza
+    DB_CNN = Solicitar al administrador
     SECRET_JWT = hz8sVbeUgMEyeIKDMH0c1zHwCohByOhUc7Z2jHU
 
 ### Pasos para ejecutar la aplicación de forma local.
