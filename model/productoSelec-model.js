@@ -18,11 +18,6 @@ const productoSeleccionadoSchema = Schema({
 		required: true,
 	},
 
-	descripcion: {
-		type: String,
-		required: true,
-	},
-
 	usuario: {
 		type: Schema.Types.ObjectId,
 		ref: 'Usuario',
