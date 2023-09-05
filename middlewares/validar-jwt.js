@@ -1,8 +1,8 @@
 const express = require("express");
+const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const validarJWT = (req, res = express.response, next) => {
-  // Leer el token header
   const token = req.header("token");
   console.log(token);
   if (!token) {
@@ -25,5 +25,5 @@ const validarJWT = (req, res = express.response, next) => {
 };
 
 module.exports = {
-  validarJWT, // USAR ESTA FUNCION COMO MIDLEWARE EN LAS RUTAS QUE QUIERO PROTEGER
+  validarJWT,
 };
