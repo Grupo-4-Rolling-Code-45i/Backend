@@ -30,13 +30,13 @@ routerProducts.post(
   crearProducto
 );
 routerProducts.get("/", mostrarProductos);
-routerProducts.delete("/delete/:id",auth, eliminarProducto);
-// Mostrar todos los productos
+routerProducts.delete("/delete/:id", auth, eliminarProducto);
+
 routerProducts.get("/", cargarProductos);
-// Mostrar un producto por su id
+
 routerProducts.get("/get-one/:id", mostrarUnProducto);
 routerProducts.get("/buscar/:term", buscarProductos);
-routerProducts.put("/edit",auth, editarProducto);
-// Mostrar un producto por su id
+routerProducts.put("/edit", auth, editarProducto);
+
 routerProducts.get("/get-one/:id", mostrarUnProducto);
 module.exports = routerProducts;

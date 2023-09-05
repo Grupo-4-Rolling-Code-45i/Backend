@@ -1,22 +1,18 @@
 const { validationResult } = require("express-validator");
 const { Producto } = require("../model/producto-model");
 
-// Agregar productos
 const crearProducto = async (req, res) => {
-  // Aqui saco la info de todos los datos que necesito
   const producto = req.body;
   const errors = validationResult(req);
-  // Verifico errores
+
   if (!errors.isEmpty()) {
     return res.json({
       errors: errors.mapped(),
     });
   }
   try {
-    // Creo constante con los datos de producto
     const newProduct = await Producto.create(producto);
-    
-    // Doy respuesta con la informacion necesaria
+
     return res.status(201).json({
       success: true,
       msg: "Producto creado satisfactoriamente",
@@ -26,7 +22,7 @@ const crearProducto = async (req, res) => {
     console.log(error);
   }
 };
-// Eliminar productos
+
 const eliminarProducto = async (req, res) => {
   try {
     const borrarProducto = await Producto.findOneAndDelete({
@@ -50,7 +46,6 @@ const eliminarProducto = async (req, res) => {
   }
 };
 
-//Cargar producto
 const cargarProductos = async (req, res) => {
   try {
     const productos = await Producto.find();
@@ -60,8 +55,6 @@ const cargarProductos = async (req, res) => {
     res.status(500).json({ msg: "error. contactese con el administrador" });
   }
 };
-
-// Mostrar productos inicio
 
 const mostrarProductos = async (req, res) => {
   try {
@@ -84,8 +77,6 @@ const mostrarProductos = async (req, res) => {
   }
 };
 
-// Mostrar un producto
-
 const mostrarUnProducto = async (req, res) => {
   try {
     const productoID = req.params.id;
@@ -107,7 +98,7 @@ const mostrarUnProducto = async (req, res) => {
     );
   }
 };
-// Buscar productos por nombre
+
 const buscarProductos = async (req, res) => {
   try {
     const { term } = req.params;

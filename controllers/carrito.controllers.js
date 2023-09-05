@@ -1,7 +1,6 @@
 const { ProductoSeleccionado } = require("../model/productoSelec-model");
 const { usuario } = require("../model/usuario");
 
-// Controlador para obtener contenido del carrito de compras de un user especifico
 const obtenerCarrito = async (req, res) => {
   try {
     const usuarioId = req.params.usuario;
@@ -12,7 +11,6 @@ const obtenerCarrito = async (req, res) => {
   }
 };
 
-// Controlador para agregar un producto al carrito del user
 const agregarProducto = async (req, res) => {
   try {
     const usuarioId = req.body.usuario;
@@ -31,7 +29,6 @@ const agregarProducto = async (req, res) => {
   }
 };
 
-// Controlador para actualizar cantidad de ese producto en el carrito
 const actualizarCantidad = async (req, res) => {
   try {
     const usuarioId = req.body.usuario;
@@ -49,7 +46,6 @@ const actualizarCantidad = async (req, res) => {
   }
 };
 
-// Controlador para quitar producto y su respectiva cantidad del carrito
 const eliminarProducto = async (req, res) => {
   try {
     const usuarioId = req.body.usuario;
@@ -68,12 +64,9 @@ const eliminarProducto = async (req, res) => {
       .status(200)
       .json({ message: "Producto eliminado correctamente" });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error:
-          "Ha ocurrido un error, contactese con el administrador del sitio",
-      });
+    res.status(500).json({
+      error: "Ha ocurrido un error, contactese con el administrador del sitio",
+    });
     console.log("error");
   }
 };

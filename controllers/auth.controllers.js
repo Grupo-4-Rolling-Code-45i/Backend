@@ -3,17 +3,14 @@ const { Usuario } = require("../model/usuario");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// Lógica crear usuarios
 const crearUsuarios = async (req, res) => {
   const { email, password } = req.body;
 
-  // Validacion de Express Validator
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.json({ success: false, errors: errors.mapped() });
   }
   try {
-    // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
 
     if (usuario) {
@@ -22,13 +19,11 @@ const crearUsuarios = async (req, res) => {
       });
     }
     usuario = new Usuario(req.body);
-    // Encriptacion de la contraseña
+
     const salt = bcrypt.genSaltSync(10);
     usuario.password = bcrypt.hashSync(password, salt);
 
-    // Guardo el usuario en la base de datos
     await usuario.save();
-    // Generar JWT
     const payload = {
       id: usuario._id,
       nombre: usuario.nombre,
@@ -51,18 +46,14 @@ const crearUsuarios = async (req, res) => {
   }
 };
 
-// ======================Lógica LOGIN usuarios===============================================
-
 const loginUsuario = async (req, res) => {
   const { email, password } = req.body;
-  // Validacion de Express Validator
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.json({ success: false, errors: errors.mapped() });
   }
 
   try {
-    // Pregunto si ya existe un usuario creado con ese email
     let usuario = await Usuario.findOne({ email });
 
     if (!usuario) {
@@ -71,7 +62,6 @@ const loginUsuario = async (req, res) => {
       });
     }
 
-    // Comparo la contraseña ingresada con la que esta en la base de datos
     const validarContraseña = bcrypt.compareSync(password, usuario.password);
     if (!validarContraseña) {
       return res.status(400).json({
@@ -85,7 +75,6 @@ const loginUsuario = async (req, res) => {
       });
     }
 
-    //generar JWT
     const payload = {
       id: usuario._id,
       nombre: usuario.nombre,
