@@ -1,4 +1,5 @@
 const express = require("express");
+const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const validarJWT = (req, res = express.response, next) => {
